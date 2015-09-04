@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/android-youtube-data-api-client.iml" filepath="$PROJECT_DIR$/android-youtube-data-api-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AndroidYoutubeDataApiClient.iml" filepath="$PROJECT_DIR$/AndroidYoutubeDataApiClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-youtube-data-api-client/android-youtube-data-api-client.iml" filepath="$PROJECT_DIR$/android-youtube-data-api-client/android-youtube-data-api-client.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
