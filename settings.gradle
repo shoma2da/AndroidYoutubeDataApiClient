@@ -1,1 +1,1 @@
-include ':app', ':android-youtube-data-api-client'
+include ':sample-app', ':android-youtube-data-api-client'
