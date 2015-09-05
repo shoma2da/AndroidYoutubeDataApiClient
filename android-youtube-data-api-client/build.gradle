@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 23
@@ -22,4 +23,29 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.0.0'
+}
+
+jacoco {
+    version '0.7.5.201505241946'
+}
+
+task unitTestCoverage(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+    reports {
+        html.enabled = true
+        html {
+            destination "build/reports/jacoco/html/"
+        }
+        xml.enabled = true
+        xml {
+            destination "build/reports/jacoco/xml/coverage.xml"
+        }
+    }
+    classDirectories = fileTree(
+            dir: './build/intermediates/classes/debug',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/BuildConfig.class',
+            ])
+    sourceDirectories = files('src/main/java')
+    executionData = files('build/jacoco/testDebugUnitTest.exec')
 }
