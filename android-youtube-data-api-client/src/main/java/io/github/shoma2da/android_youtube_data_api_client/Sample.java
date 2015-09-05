@@ -7,8 +7,8 @@ import android.util.Log;
  */
 public class Sample {
 
-    public static void hello() {
-        Log.d("YoutubeDataApiClient", "hello");
+    public static String hello() {
+        return "hello";
     }
 
 }
