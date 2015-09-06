@@ -1,0 +1,16 @@
+language: android
+android:
+  components:
+    - android-23
+    - build-tools-23.0.0
+
+script:
+  - ./gradlew test
+
+after_success:
+  - ./gradlew unitTestCoverage
+  - ./gradlew coveralls
+
+notifications:
+  slac:
+    secure: Rvf+6fB0RlaGsMgpnwn9DNpWXDxJua7LIey+HIYHuBu4+aWeXqhm4zWem7zrcHC3dldoga+RH63zGxckKfREqX+ONXD2xvwxgHgC3jJXeh0QSdF4t3KUZ/ZUPEPzsSztR+YTvgTTzmFzqBm46VGEKFt9RDBnQaiyD9/5PTXf59Fbz/+2NuqOvxwTXOj0FU2O//rHlmLYpgdsKvWWir6ZTnf6ZNpsqD6qYnnkUvG8abKNKpHVVSk0Pk7Yj14j7bAbTwPru1umP6PLQqU/WspjaZUoooTe9ziwsgQuCgnUuCBP5t8EObYsjyiUT1a35LPzqNJbHTfknh7x8h41xykRm+T9buNzCFkMnTGrkp6KM8KdFVy5cX29t5fY71UGPnwuukvj5ZHGwGvw8A2ftaYYWJKkRyYQemGIWMnHBcASYH+WtZ8J2iJ2B9j0E5CPxyVPzkZDzxlbC5FpjK97oFoXxHFfqO9EkMfvuS/q/Ql/fHm7grGGQWTzxFieQwbxhCAmhHnfZwlPBvtWXX1tYLWGpimHLraeiKtqfvTx4IQYI6yHkmu01m0Sx6ZU0/9LpcKJVFMvrr2BLBBrNUFFQqDu8IG/ArkBdN2OmFqZKt6WpUuCqdjnvuAu6ARSFoywr7lNOAkTRcRKqTfgDodaY9xINmANtLhoqKGHtKMWFlheYWU=
