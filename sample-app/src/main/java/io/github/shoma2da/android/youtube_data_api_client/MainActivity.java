@@ -1,11 +1,9 @@
 package io.github.shoma2da.android.youtube_data_api_client;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import io.github.shoma2da.android_youtube_data_api_client.Sample;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,8 +11,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Sample.hello();
     }
 
     @Override
