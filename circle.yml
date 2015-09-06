@@ -4,6 +4,6 @@ dependencies:
     - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.0"
 
 test:
-  override:
-    - ./gradlew test unitTestCoverage
-    - find . -name coverage.xml
+  post:
+    - ./gradlew unitTestCoverage
+    - ./gradlew coveralls

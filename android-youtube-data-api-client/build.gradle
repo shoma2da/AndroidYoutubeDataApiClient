@@ -1,5 +1,16 @@
 apply plugin: 'com.android.library'
 apply plugin: 'jacoco'
+apply plugin: 'com.github.kt3k.coveralls'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1x'
+    }
+}
 
 android {
     compileSdkVersion 23
@@ -29,6 +40,8 @@ jacoco {
     version '0.7.5.201505241946'
 }
 
+def jacocoXmlReportPath = "build/reports/jacoco/xml/coverage.xml"
+
 task unitTestCoverage(type: JacocoReport, dependsOn: "testDebugUnitTest") {
     reports {
         html.enabled = true
@@ -37,7 +50,7 @@ task unitTestCoverage(type: JacocoReport, dependsOn: "testDebugUnitTest") {
         }
         xml.enabled = true
         xml {
-            destination "build/reports/jacoco/xml/coverage.xml"
+            destination jacocoXmlReportPath
         }
     }
     classDirectories = fileTree(
@@ -49,3 +62,5 @@ task unitTestCoverage(type: JacocoReport, dependsOn: "testDebugUnitTest") {
     sourceDirectories = files('src/main/java')
     executionData = files('build/jacoco/testDebugUnitTest.exec')
 }
+
+coveralls.jacocoReportPath = jacocoXmlReportPath
