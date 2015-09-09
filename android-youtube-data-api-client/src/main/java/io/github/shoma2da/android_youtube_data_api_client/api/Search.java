@@ -1,27 +1,41 @@
 package io.github.shoma2da.android_youtube_data_api_client.api;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
+import android.support.annotation.VisibleForTesting;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.Locale;
 
 /**
  * Created by shoma2da on 15/09/06.
  */
 public class Search {
 
+    public static final String URL_BASE = "https://www.googleapis.com/youtube/v3/search?key=%s&q=%s&part=snippet&maxResults=50&order=relevance";
+
     @NonNull
-    public SearchResultList search() throws IOException {
-        //OkHttpClient client = new OkHttpClient();
-        //Request request = new Request.Builder().
-        //        url("https://www.googleapis.com/youtube/v3/search?key=AIzaSyABfaHO105BgqO9SX73U0pN0rPe3S9Ra2s&q=%E3%81%BE%E3%82%8C&part=snippet&maxResults=50&order=relevance").
-        //        build();
-        //Response response = client.newCall(request).execute();
-        return new SearchResultList();
+    public SearchResultList search(String apiKey, String word) throws IOException, JSONException {
+        String url = buildUrl(apiKey, word);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().
+                url(url).
+                build();
+        Response response = client.newCall(request).execute();
+        String jsonString = response.body().string();
+        JSONObject json = new JSONObject(jsonString);
+        return new SearchResultListParser().parse(json);
+    }
+
+    @VisibleForTesting
+    public String buildUrl(String apiKey, String word) {
+        return String.format(Locale.JAPAN, URL_BASE, apiKey, word);
     }
 
 }

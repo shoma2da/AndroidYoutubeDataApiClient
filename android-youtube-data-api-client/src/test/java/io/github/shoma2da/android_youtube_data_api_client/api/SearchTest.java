@@ -1,5 +1,6 @@
 package io.github.shoma2da.android_youtube_data_api_client.api;
 
+import org.json.JSONException;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -18,9 +19,9 @@ public class SearchTest {
     }
 
     @Test
-    public void searchMethod() throws IOException {
+    public void CanBuildUrl() {
         Search search = new Search();
-        assertNotNull(search.search());
+        assertNotNull(search.buildUrl("apiKey", "word"));
     }
 
 }
