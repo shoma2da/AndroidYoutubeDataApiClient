@@ -15,4 +15,10 @@ public class SearchResultListTest {
         assertNotNull(list);
     }
 
+    @Test
+    public void GetTotalResults() {
+        SearchResultList list = new SearchResultList(3);
+        assertEquals(3, list.getTotalResults());
+    }
+
 }
