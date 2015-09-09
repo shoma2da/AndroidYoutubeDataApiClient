@@ -15,7 +15,7 @@ import java.io.IOException;
 public class Search {
 
     @NonNull
-    public SearchResultList searh() throws IOException {
+    public SearchResultList search() throws IOException {
         //OkHttpClient client = new OkHttpClient();
         //Request request = new Request.Builder().
         //        url("https://www.googleapis.com/youtube/v3/search?key=AIzaSyABfaHO105BgqO9SX73U0pN0rPe3S9Ra2s&q=%E3%81%BE%E3%82%8C&part=snippet&maxResults=50&order=relevance").

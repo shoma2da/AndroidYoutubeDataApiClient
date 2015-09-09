@@ -1,7 +1,5 @@
 package io.github.shoma2da.android_youtube_data_api_client.api;
 
-import android.support.annotation.NonNull;
-
 import org.junit.Test;
 
 import java.io.IOException;
@@ -22,7 +20,7 @@ public class SearchTest {
     @Test
     public void searchMethod() throws IOException {
         Search search = new Search();
-        assertNotNull(search.searh());
+        assertNotNull(search.search());
     }
 
 }
