@@ -25,7 +25,6 @@ public class SearchResultListParserTest {
     @Before
     public void setUp() throws JSONException {
         mMockParser = mock(SearchResultItemParser.class);
-        when(mMockParser.parse((JSONObject)anyObject())).thenReturn(new SearchResultItem());
     }
 
     @Test
@@ -65,8 +64,22 @@ public class SearchResultListParserTest {
                 "}," +
                 "\"items\": [{}, {}, {}]" +
                 "}");
+        when(mMockParser.parse((JSONObject)anyObject())).thenReturn(new SearchResultItem());
         SearchResultList list = new SearchResultListParser().parse(json, mMockParser);
         assertEquals(3, list.itemSize());
+    }
+
+    @Test
+    public void CannotParseItem() throws JSONException {
+        JSONObject json = new JSONObject("{" +
+                "\"pageInfo\": {" +
+                "\"totalResults\": 0" +
+                "}," +
+                "\"items\": [{}, {}, {}]" +
+                "}");
+        when(mMockParser.parse((JSONObject)anyObject())).thenReturn(null);
+        SearchResultList list = new SearchResultListParser().parse(json, mMockParser);
+        assertEquals(0, list.itemSize());
     }
 
     @Test

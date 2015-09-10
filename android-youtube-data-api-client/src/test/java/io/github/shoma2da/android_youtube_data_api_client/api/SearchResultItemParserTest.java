@@ -40,12 +40,7 @@ public class SearchResultItemParserTest {
     @Test
     public void CannotParse() throws JSONException {
         JSONObject emptyJson = new JSONObject("{}");
-        try {
-            SearchResultItemParser parser = new SearchResultItemParser();
-            parser.parse(emptyJson);
-            fail();
-        } catch (JSONException e) {
-            assertTrue(true);
-        }
+        SearchResultItemParser parser = new SearchResultItemParser();
+        assertNull(parser.parse(emptyJson));
     }
 }

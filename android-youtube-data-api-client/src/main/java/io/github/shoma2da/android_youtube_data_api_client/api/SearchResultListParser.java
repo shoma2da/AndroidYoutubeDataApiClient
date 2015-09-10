@@ -22,7 +22,9 @@ public class SearchResultListParser {
         ArrayList<SearchResultItem> list = new ArrayList<>();
         for (int i = 0; i < items.length(); i++) {
             SearchResultItem item = parser.parse(items.getJSONObject(i));
-            list.add(item);
+            if (item != null) {
+                list.add(item);
+            }
         }
 
         return new SearchResultList(totalResults, list);
