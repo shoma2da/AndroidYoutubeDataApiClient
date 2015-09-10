@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 
 buildscript {
     repositories {
@@ -9,6 +11,8 @@ buildscript {
 
     dependencies {
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1x'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
+        classpath 'com.github.dcendents:android-maven-plugin:1.2'
     }
 }
 
@@ -72,3 +76,49 @@ task unitTestCoverage(type: JacocoReport, dependsOn: "testDebugUnitTest") {
 }
 
 coveralls.jacocoReportPath = jacocoXmlReportPath
+
+group = 'com.hatenablog.shoma2da.android'
+version = '0.0.1'
+
+def siteUrl = 'https://github.com/shoma2da/AndroidYoutubeDataApiClient'
+def gitUrl = 'https://github.com/shoma2da/AndroidYoutubeDataApiClient.git'
+bintray {
+    user = "shoma2da"
+    key = bintray_api_key ?: ""
+
+    configurations = ['archives'] //When uploading configuration files
+    pkg {
+        repo = 'maven'
+        name = 'AndroidYoutubeDataApiClient'
+        desc = 'Simple client for YouTube Data API (v3) on Android.'
+        websiteUrl = siteUrl
+        issueTrackerUrl = '${siteUrl}/issues'
+        vcsUrl = gitUrl
+        licenses = ['MIT']
+        labels = ['aar', 'android', 'example']
+        publicDownloadNumbers = true
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
