@@ -1,11 +1,24 @@
 package io.github.shoma2da.android.youtube_data_api_client;
 
-import android.support.v7.app.AppCompatActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
-import io.github.shoma2da.android_youtube_data_api_client.Sample;
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import io.github.shoma2da.android_youtube_data_api_client.AndroidYoutubeDataApiClient;
+import io.github.shoma2da.android_youtube_data_api_client.api.SearchResultItem;
+import io.github.shoma2da.android_youtube_data_api_client.api.SearchResultList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,28 +27,47 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Sample.hello();
-    }
+        AndroidYoutubeDataApiClient.setDebug(true);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+        final TextView apiKeyTextView = (TextView)findViewById(R.id.text_api_key);
+        final TextView wordTextView = (TextView)findViewById(R.id.text_word);
+        final ListView listView = (ListView)findViewById(R.id.list);
+        final View searchButton = findViewById(R.id.button_search);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //set api key
+                String apiKey = apiKeyTextView.getText().toString();
+                AndroidYoutubeDataApiClient.setApiKey(apiKey);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+                final String word = wordTextView.getText().toString();
+                new AsyncTask<Void, Void, SearchResultList>() {
+                    @Override
+                    protected SearchResultList doInBackground(Void... params) {
+                        try {
+                            return AndroidYoutubeDataApiClient.search(word);
+                        } catch (JSONException | IOException e) {
+                            e.printStackTrace();
+                            return null;
+                        }
+                    }
 
-        return super.onOptionsItemSelected(item);
+                    @Override
+                    protected void onPostExecute(SearchResultList list) {
+                        super.onPostExecute(list);
+
+                        //convert to title string list
+                        ArrayList<String> titles = new ArrayList<>();
+                        for (SearchResultItem item : list) {
+                            titles.add(item.getTitle());
+                        }
+
+                        //set to list
+                        listView.setAdapter(new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, titles));
+                    }
+                }.execute();
+            }
+        });
     }
 }
