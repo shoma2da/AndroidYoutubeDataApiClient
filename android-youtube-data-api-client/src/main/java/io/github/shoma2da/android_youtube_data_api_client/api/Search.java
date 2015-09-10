@@ -28,9 +28,13 @@ public class Search {
                 url(url).
                 build();
         Response response = client.newCall(request).execute();
-        String jsonString = response.body().string();
-        JSONObject json = new JSONObject(jsonString);
-        return new SearchResultListParser().parse(json);
+        if (response.isSuccessful()) {
+            String jsonString = response.body().string();
+            JSONObject json = new JSONObject(jsonString);
+            return new SearchResultListParser().parse(json);
+        } else {
+            throw new RuntimeException("Failed to access api. Please confirm your parameter such as api key.");
+        }
     }
 
     @VisibleForTesting
