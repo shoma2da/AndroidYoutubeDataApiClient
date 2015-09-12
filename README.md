@@ -5,6 +5,14 @@
 
 Simple client for YouTube Data API (v3) on Android.
 
+# Download
+
+In your `build.gradle` :
+
+```
+compile 'com.hatenablog.shoma2da.android:android-youtube-data-api-client:0.0.1'
+```
+
 # How to use it
 
 In your `Application` class (or first `Activity`) :
