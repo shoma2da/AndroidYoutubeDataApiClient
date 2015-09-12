@@ -1,0 +1,20 @@
+language: android
+android:
+  components:
+    - android-23
+    - build-tools-23.0.0
+    - extra-android-m2repository
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_37958c79c04c_key -iv $encrypted_37958c79c04c_iv -in gradle.properties.enc -out gradle.properties -d
+
+script:
+  - ./gradlew test
+
+after_success:
+  - ./gradlew unitTestCoverage
+  - ./gradlew coveralls
+
+notifications:
+  slack:
+    secure: cMxgIrcVxaQN0VSJRgVNEb8YDh3oeVfqe2wDtNtXvMk26K244iNViZS9/8ZjVk3yTL+JCb4Ep5aMCvMctXxBFOTrcvU2r0Mb1kDf8pyUJ2nVN/idEurXMPygzzXgVnTBilh1nOLh5wURaMDFg1jSP6arTsKMwFdl7KDdEaBpsNqmvZ4Q68z02wux0l5R+aZUo6+juLBdPN2tBk9Q+tccMjN56W9wS9Msf1nl0cEBRek4j//HZZxDmw7cjjiUOlQZ3I28e8T+CnvV4W/QqRyzg2Wtg7KdnJS3QFtA8L2RTGF4V1m/qmhnP748pgWnqPXk8Olw3y+pn8cKCizft0zUYySvEVcrsVhNbqjhXQrkwRBwd+FUPOlPJ5bV1RKZvnV+m3vfyLUDABnAQZD4Eht0D17oQTypnjle/gYHS8hLN+v74MkHIcOceL+rxj6UdaxoPgy9cZqRK6ZqHSI24Gmto1lIBaQjqoIg3jfHtpdmmSae7b1VNisbLGL1F5gOhWB/wBEhLyYEw9DHS64Yrc//8B0q4St0e8oFMbv8iP7YxrmBFd0ZU43EENDdL48rInbQNAkjvrevKAXEZRQxy/8dg4P0rUbJDdGto9rOJPR+EkAGpmjPyJO2w1BNZ7l7KL8AXctDVWvvp3vds/DSTAkw7eSEDYEcrjpPkilNeLcH3tw=
